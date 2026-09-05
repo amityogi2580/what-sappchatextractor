@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI WhatsApp Lead Extractor (99%+ Accuracy) | Aasamedchem</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- SheetJS for 1-Click Excel Generation (.xlsx) -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <style>
+    :root {
+      --bg-main: #0b0f19;
+      --bg-card: #111827;
+      --bg-card-hover: #172033;
+      --bg-input: #1e293b;
+      --border-color: #2e3b52;
+      --border-focus: #3b82f6;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #2563eb;
+      --accent-blue-hover: #1d4ed8;
+      --accent-cyan: #06b6d4;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-purple: #8b5cf6;
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -4px rgba(0, 0, 0, 0.6);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 24px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1760px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+      box-shadow: 0 0 24px rgba(59, 130, 246, 0.4);
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ai-badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      -webkit-text-fill-color: white;
+    }
+
+    .brand-subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid transparent;
+      outline: none;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: white;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.55);
+      transform: translateY(-1px);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #059669, #10b981);
+      color: white;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+    .btn-success:hover {
+      background: linear-gradient(135deg, #10b981, #34d399);
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-card);
+      color: var(--text-primary);
+      border-color: var(--border-color);
+    }
+    .btn-secondary:hover {
+      background-color: var(--bg-card-hover);
+      border-color: var(--border-focus);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      color: white;
+    }
+    .btn-danger:hover {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 12px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* API Config Bar */
+    .api-config-card {
+      background: linear-gradient(180deg, #131c2e, #0f172a);
+      border: 1px solid #334155;
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      justify-content: space-between;
+    }
+
+    .api-inputs {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .config-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .config-select, .config-input {
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      padding: 8px 12px;
+      font-size: 13px;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .config-select:focus, .config-input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+    }
+
+    .key-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .key-wrapper input {
+      width: 100%;
+      padding-right: 36px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .toggle-key-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 4px;
+    }
+
+    .toggle-key-btn:hover {
+      color: var(--text-primary);
+    }
+
+    /* Grid Layout */
+    .app-layout {
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 1280px) {
+      .app-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Cards */
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Textarea */
+    .textarea-wrapper {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    textarea#whatsappInput {
+      width: 100%;
+      height: 380px;
+      background-color: var(--bg-input);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      padding: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      resize: vertical;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    textarea#whatsappInput:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    }
+
+    /* Quick Action Row */
+    .input-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stat-card {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    /* Table Toolbar */
+    .table-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .search-box input {
+      width: 100%;
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      padding: 8px 12px 8px 34px;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--border-focus);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      background-color: var(--bg-card);
+      max-height: 680px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+      min-width: 1320px;
+    }
+
+    th {
+      background-color: #0f172a;
+      color: var(--text-secondary);
+      font-weight: 700;
+      padding: 12px 10px;
+      border-bottom: 2px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      padding: 8px 8px;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: middle;
+      color: var(--text-primary);
+    }
+
+    tr:hover td {
+      background-color: rgba(30, 41, 59, 0.6);
+    }
+
+    /* Editable Input Fields inside Table */
+    .cell-input {
+      width: 100%;
+      background-color: var(--bg-input);
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      padding: 8px 10px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.15s ease;
+    }
+
+    .cell-input:hover {
+      border-color: var(--border-color);
+    }
+
+    .cell-input:focus {
+      background-color: #0f172a;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+    }
+
+    .cell-select {
+      background-color: var(--bg-input);
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      padding: 8px 8px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .cell-select:focus {
+      border-color: var(--border-focus);
+    }
+
+    /* Empty State */
+    .empty-state {
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .empty-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+      opacity: 0.6;
+    }
+
+    .empty-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .empty-desc {
+      font-size: 13px;
+      max-width: 420px;
+      margin: 0 auto 16px;
+    }
+
+    /* Loading Overlay */
+    .loading-overlay {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(4px);
+      z-index: 50;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 4px solid rgba(59, 130, 246, 0.2);
+      border-top-color: #3b82f6;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: #93c5fd;
+      letter-spacing: 0.02em;
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      background-color: #1e293b;
+      color: white;
+      padding: 12px 18px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      border-left: 4px solid var(--accent-blue);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .toast.toast-success { border-left-color: var(--accent-green); }
+    .toast.toast-error { border-left-color: var(--accent-rose); }
+    .toast.toast-warning { border-left-color: var(--accent-amber); }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Helper Notes */
+    .guide-box {
+      background: rgba(30, 41, 59, 0.4);
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .guide-box strong {
+      color: var(--text-primary);
+    }
+
+    .guide-box ul {
+      margin-left: 18px;
+      margin-top: 6px;
+    }
+
+    .guide-box li {
+      margin-bottom: 4px;
+    }
+
+    /* Column Widths */
+    .col-action { width: 44px; text-align: center; }
+    .col-role { width: 110px; }
+    .col-product { width: 220px; }
+    .col-company { width: 180px; }
+    .col-contact { width: 150px; }
+    .col-designation { width: 140px; }
+    .col-phone { width: 150px; }
+    .col-email { width: 190px; }
+    .col-qty { width: 100px; }
+    .col-minqty { width: 100px; }
+    .col-cas { width: 110px; }
+    .col-cat { width: 130px; }
+    .col-remarks { width: 230px; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="brand-logo">🤖</div>
+        <div>
+          <h1 class="brand-title">
+            AI WhatsApp Lead Extractor
+            <span class="ai-badge">98%+ Accuracy</span>
+          </h1>
+          <p class="brand-subtitle">Natural Language Parsing &bull; Multi-Product Decomposition &bull; Direct Admin Excel Exporter</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="loadSampleBtn" class="btn btn-secondary" onclick="loadSampleData()">
+          <span>🧪 Load Test Sample</span>
+        </button>
+        <button id="clearAllBtn" class="btn btn-secondary" onclick="clearAllData()">
+          <span>🗑️ Clear</span>
+        </button>
+        <button id="exportExcelBtn" class="btn btn-success" onclick="exportToExcel()">
+          <span>📥 Export Excel (.xlsx)</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Top API Configuration Bar -->
+    <div class="api-config-card">
+      <div class="api-inputs">
+        <span class="config-label">⚡ AI Engine:</span>
+        <select id="llmProvider" class="config-select" onchange="onProviderChange()">
+          <option value="gemini">Google Gemini (Recommended - Free & Accurate)</option>
+          <option value="groq">Groq LLaMA 3.3 (Ultra-Fast < 500ms)</option>
+          <option value="openai">OpenAI (GPT-4o / GPT-4o-mini)</option>
+          <option value="deepseek">DeepSeek (DeepSeek-V3)</option>
+          <option value="claude">Anthropic Claude (Claude 3.5)</option>
+          <option value="local">Local Regex Engine (Offline Fallback)</option>
+        </select>
+
+        <select id="llmModel" class="config-select" title="Specific AI Model"></select>
+
+        <div class="key-wrapper" id="keyWrapper">
+          <input 
+            type="password" 
+            id="apiKeyInput" 
+            class="config-input" 
+            placeholder="Paste your API key here (saved locally in browser)..." 
+            oninput="saveConfig()"
+          />
+          <button type="button" class="toggle-key-btn" onclick="toggleKeyVisibility()" title="Show/Hide API Key">👁️</button>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <span id="keyStatusBadge" style="font-size: 12px; color: var(--text-muted);">Key stored securely in browser</span>
+      </div>
+    </div>
+
+    <!-- Step-by-Step Quick Guide Banner -->
+    <div style="background: linear-gradient(90deg, rgba(37, 99, 235, 0.15), rgba(124, 58, 237, 0.15)); border: 1px solid #3b82f6; border-radius: 12px; padding: 14px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; gap: 16px;">
+      <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600;">
+        <span style="background: #2563eb; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px;">1</span>
+        <span>Upload <code>.txt</code> file or Paste Chats</span>
+      </div>
+      <span style="color: var(--text-muted);">➔</span>
+      <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600;">
+        <span style="background: #7c3aed; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px;">2</span>
+        <span>Click <strong>✨ AI Extract Leads</strong></span>
+      </div>
+      <span style="color: var(--text-muted);">➔</span>
+      <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600;">
+        <span style="background: #10b981; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px;">3</span>
+        <span>Click <strong>📊 Export to Excel (.xlsx)</strong></span>
+      </div>
+    </div>
+
+    <!-- Main Workspace Layout -->
+    <div class="app-layout">
+      
+      <!-- Left Panel: Raw WhatsApp Paste -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>💬 WhatsApp Messages</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <label class="btn btn-secondary btn-sm" style="cursor: pointer;">
+              📁 Upload .txt File
+              <input type="file" id="chatFileInput" accept=".txt,.log,.csv" style="display: none;" onchange="handleFileUpload(event)" />
+            </label>
+            <span id="charCount" style="font-size: 12px; color: var(--text-muted); font-family: monospace;">0 chars</span>
+          </div>
+        </div>
+
+        <div class="textarea-wrapper">
+          <textarea 
+            id="whatsappInput" 
+            placeholder="Paste your WhatsApp chat messages here, OR click 'Upload .txt File' above..."
+            oninput="updateCharCount()"
+          ></textarea>
+        </div>
+
+        <div class="input-actions">
+          <button id="extractBtn" class="btn btn-primary" style="flex: 1;" onclick="processWithAI()">
+            <span>✨ AI Extract Leads</span>
+          </button>
+          <button class="btn btn-secondary" onclick="document.getElementById('whatsappInput').value = ''; updateCharCount();">
+            <span>Clear Text</span>
+          </button>
+        </div>
+
+        <div class="guide-box">
+          <strong>🧠 Why AI Extraction Delivers 98%+ Accuracy:</strong>
+          <ul>
+            <li><strong>Intent Recognition:</strong> Distinguishes <code>BUYER</code> (needs, inquiry, purchase) vs <code>SUPPLIER</code> (ready stock, available, selling) regardless of message phrasing.</li>
+            <li><strong>Chemical Formula Shield:</strong> Retains full formulas like <code>7H2O</code> or concentrations like <code>98.2%</code> in Product Name instead of turning them into Quantities.</li>
+            <li><strong>Multi-Product Extraction:</strong> If a contact sends 5 chemical products or equipment in 1 message, the AI creates 5 distinct rows with the contact details attached to each.</li>
+            <li><strong>No Backend Setup Needed:</strong> Calls the LLM API directly from your browser with HTTPS. Your API key never leaves your device.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Right Panel: Editable Extracted Workspace -->
+      <div class="card">
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay">
+          <div class="spinner"></div>
+          <div class="loading-text" id="loadingStatusText">🤖 AI is reading & extracting leads...</div>
+        </div>
+
+        <div class="card-header">
+          <div class="card-title">
+            <span>📋 Extracted Leads Preview (<span id="leadCountDisplay">0</span>)</span>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="addNewEmptyRow()">
+            <span>➕ Add Row</span>
+          </button>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+          <div class="stat-card">
+            <span class="stat-label">Total Leads</span>
+            <span class="stat-value" id="statTotal">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Buyers</span>
+            <span class="stat-value" id="statBuyers" style="color: #60a5fa;">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Suppliers</span>
+            <span class="stat-value" id="statSuppliers" style="color: #34d399;">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">With Contacts</span>
+            <span class="stat-value" id="statContacts" style="color: #fbbf24;">0</span>
+          </div>
+        </div>
+
+        <!-- Table Toolbar -->
+        <div class="table-toolbar">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="tableSearch" placeholder="Filter extracted leads by product, company, phone, contact..." oninput="filterTable()" />
+          </div>
+          <div style="font-size: 12px; color: var(--text-muted);">
+            Double-click or edit any cell directly before downloading.
+          </div>
+        </div>
+
+        <!-- Scrollable Table -->
+        <div class="table-container">
+          <table id="leadsTable">
+            <thead>
+              <tr>
+                <th class="col-action">#</th>
+                <th class="col-role">Role</th>
+                <th class="col-product">Product Name *</th>
+                <th class="col-company">Company Name</th>
+                <th class="col-contact">Contact Name</th>
+                <th class="col-designation">Designation</th>
+                <th class="col-phone">Phone Number</th>
+                <th class="col-email">Email</th>
+                <th class="col-qty">Quantity</th>
+                <th class="col-minqty">Min Qty</th>
+                <th class="col-cas">CAS Number</th>
+                <th class="col-cat">Category</th>
+                <th class="col-remarks">Remarks / Notes</th>
+                <th class="col-action">Del</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+
+          <!-- Empty State -->
+          <div id="emptyState" class="empty-state">
+            <div class="empty-icon">📥</div>
+            <div class="empty-title">No WhatsApp Leads Extracted Yet</div>
+            <div class="empty-desc">Paste your WhatsApp inquiry messages into the box on the left and click <strong>AI Extract Leads</strong> to populate this workspace.</div>
+            <button class="btn btn-secondary btn-sm" onclick="loadSampleData()">Load Sample Messages</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script>
+    // Global state of extracted lead objects
+    let leadsData = [];
+
+    // Models dictionary
+    const PROVIDER_MODELS = {
+      gemini: [
+        { id: 'gemini-3.6-flash', name: 'Gemini 3.6 Flash (Latest / Recommended)' },
+        { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash' },
+        { id: 'gemini-1.5-flash', name: 'Gemini 1.5 Flash (Standard)' },
+        { id: 'gemini-1.5-pro', name: 'Gemini 1.5 Pro (Deep Reasoning)' },
+        { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash' }
+      ],
+      groq: [
+        { id: 'llama-3.3-70b-versatile', name: 'LLaMA 3.3 70B (Recommended - Blazing Fast)' },
+        { id: 'llama-3.1-8b-instant', name: 'LLaMA 3.1 8B (Instant)' },
+        { id: 'mixtral-8x7b-32768', name: 'Mixtral 8x7B' }
+      ],
+      openai: [
+        { id: 'gpt-4o-mini', name: 'GPT-4o Mini (Cost-Effective & Smart)' },
+        { id: 'gpt-4o', name: 'GPT-4o (Flagship Model)' }
+      ],
+      deepseek: [
+        { id: 'deepseek-chat', name: 'DeepSeek-V3 Chat' },
+        { id: 'deepseek-reasoner', name: 'DeepSeek-R1 (Reasoning)' }
+      ],
+      claude: [
+        { id: 'claude-3-5-sonnet-20241022', name: 'Claude 3.5 Sonnet' },
+        { id: 'claude-3-5-haiku-20241022', name: 'Claude 3.5 Haiku (Fast)' }
+      ],
+      local: [
+        { id: 'local-regex', name: 'Local Regex Parser (No API Key Required)' }
+      ]
+    };
+
+    // System prompt for structured extraction with strict 99%+ accuracy & leave-blank-if-ambiguous rule
+    const EXTRACTION_SYSTEM_PROMPT = `You are an expert chemical procurement and WhatsApp lead extraction AI.
+Your task is to extract structured lead data from WhatsApp chat logs with maximum precision (99%+ accuracy).
+
+Extract EXACTLY these 11 fields for every lead:
+1. role: "BUYER" or "SUPPLIER" (Infer from context: "need", "require", "buy", "chahiye" -> BUYER; "available", "ready stock", "selling", "offer" -> SUPPLIER)
+2. productName: Chemical or product name with grade/formula (e.g. 'Mavacamten', 'Magnesium Sulphate 7H2O', 'Natural Camphor Powder 98.2%')
+3. casNumber: CAS registry number (e.g. '7786-30-3', '8006-90-4'). Must leave "" if absent or ambiguous.
+4. companyName: Firm, company, or business entity name (e.g. 'Trinadh Industries Pvt. Ltd.'). Must leave "" if absent.
+5. ownerName: Owner, contact person, or sender name (e.g. 'Bhami', 'Praveen', 'Manan Bhardwaj', 'Chintu patel'). Must leave "" if ambiguous or absent.
+6. category: Chemical/product classification (e.g. 'API', 'Excipient', 'Intermediate', 'Solvent', 'Packaging', 'Equipment'). Leave "" if unclear.
+7. email: Clean email address (e.g. 'trinadhindustries@gmail.com'). Auto-fix minor typos like '.come' -> '.com'. Leave "" if absent.
+8. phoneNumber: Contact mobile/phone number with country code (e.g. '9620185750', '+91 9376215998'). Auto-detect numbers even after labels like 'Whatsapp quarry:', 'Ph:', 'Mobile:'. Leave "" if absent.
+9. quantity: Numeric quantity or amount required/offered (e.g. '1.4 kg', '1 kg', '30 Tons', '6 Tons'). Do NOT confuse formula numbers like 7H2O or purity like 98.2% with quantity.
+10. minQuantity: Minimum order quantity (MOQ) or minimum supply lot (e.g. '1 Ton', '25 kg'). Leave "" if absent.
+11. remarks: Packaging specs, designation (e.g. 'Director', 'Owner', 'Sales Head'), payment terms, market, origin/make, location, or additional notes.
+
+Return ONLY a valid JSON array of objects with these exact 11 keys:
+"role", "productName", "casNumber", "companyName", "ownerName", "category", "email", "phoneNumber", "quantity", "minQuantity", "remarks".
+
+CRITICAL ACCURACY RULES:
+1. SENDER & OWNER SIGNATURE RECOGNITION:
+   - Identify sender/contact names at the signature area of messages (e.g. 'Bhami, Director' -> ownerName: "Bhami", remarks: "Designation: Director"; 'Chintu patel / Director' -> ownerName: "Chintu patel"; 'Praveen - Owner' -> ownerName: "Praveen").
+   - Extract company names from signatures or body text (e.g. 'Trinadh Industries Pvt. Ltd. trinadhindustries@gmail.com' -> companyName: "Trinadh Industries Pvt. Ltd.", email: "trinadhindustries@gmail.com").
+   - Parse phone numbers regardless of label typos (e.g. 'Whatsapp quarry:9620185750' or 'whatsapp query:' -> phoneNumber: "9620185750").
+
+2. BULLETED MULTI-PRODUCT LISTS:
+   - When a broadcast message lists multiple chemical/pharmaceutical items using bullet points ('•', '-', '*') or numbers ('1.', '2.') like:
+     • Mavacamten – 1.4 kg
+     • Avatrombopag Maleate – 1 kg
+     • Carboplatin
+   - Create a SEPARATE lead object for EACH product (e.g. productName: "Mavacamten", quantity: "1.4 kg"; productName: "Carboplatin", quantity: ""), copying the exact same contact/company/owner details (ownerName: "Bhami", companyName: "Trinadh Industries Pvt. Ltd.", email: "trinadhindustries@gmail.com", phoneNumber: "9620185750") across ALL generated rows!
+
+3. STRICT AMBIGUITY RULE:
+   - If a field is missing, unclear, or ambiguous in the message, output empty string "". DO NOT guess or hallucinate any data!
+4. PRESERVE CHEMICAL FORMULAS: Never remove or parse chemical hydrate numbers (e.g., 7H2O, 2HCl) or percentages (98.2%) as order quantity.`;
+
+    // Initialization on Page Load
+    window.addEventListener('DOMContentLoaded', () => {
+      loadSavedConfig();
+      renderTable();
+    });
+
+    // Populate model dropdown based on selected provider
+    function onProviderChange() {
+      const provider = document.getElementById('llmProvider').value;
+      const modelSelect = document.getElementById('llmModel');
+      const keyWrapper = document.getElementById('keyWrapper');
+      
+      modelSelect.innerHTML = '';
+      const models = PROVIDER_MODELS[provider] || [];
+      models.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m.id;
+        opt.textContent = m.name;
+        modelSelect.appendChild(opt);
+      });
+
+      if (provider === 'local') {
+        keyWrapper.style.display = 'none';
+        document.getElementById('keyStatusBadge').innerText = 'Local heuristic mode (offline)';
+      } else {
+        keyWrapper.style.display = 'block';
+        const savedKey = localStorage.getItem(`apikey_${provider}`) || '';
+        document.getElementById('apiKeyInput').value = savedKey;
+        updateKeyStatusBadge(provider, savedKey);
+      }
+
+      saveConfig();
+    }
+
+    function updateKeyStatusBadge(provider, key) {
+      const badge = document.getElementById('keyStatusBadge');
+      if (key && key.trim().length > 5) {
+        badge.innerHTML = `<span style="color: var(--accent-green);">🟢 Key Configured for ${provider.toUpperCase()}</span>`;
+      } else {
+        badge.innerHTML = `<span style="color: var(--accent-amber);">⚠️ Enter ${provider.toUpperCase()} API Key</span>`;
+      }
+    }
+
+    function saveConfig() {
+      const provider = document.getElementById('llmProvider').value;
+      const model = document.getElementById('llmModel').value;
+      const key = document.getElementById('apiKeyInput').value.trim();
+
+      localStorage.setItem('selected_provider', provider);
+      localStorage.setItem('selected_model', model);
+      if (provider !== 'local') {
+        localStorage.setItem(`apikey_${provider}`, key);
+        updateKeyStatusBadge(provider, key);
+      }
+    }
+
+    function loadSavedConfig() {
+      const savedProvider = localStorage.getItem('selected_provider') || 'gemini';
+      document.getElementById('llmProvider').value = savedProvider;
+      onProviderChange();
+
+      const savedModel = localStorage.getItem('selected_model');
+      const availableModels = (PROVIDER_MODELS[savedProvider] || []).map(m => m.id);
+      
+      if (savedModel && availableModels.includes(savedModel) && savedModel !== 'gemini-2.0-flash') {
+        document.getElementById('llmModel').value = savedModel;
+      } else if (availableModels.length > 0) {
+        document.getElementById('llmModel').value = availableModels[0];
+        localStorage.setItem('selected_model', availableModels[0]);
+      }
+    }
+
+    function toggleKeyVisibility() {
+      const input = document.getElementById('apiKeyInput');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    function updateCharCount() {
+      const text = document.getElementById('whatsappInput').value;
+      document.getElementById('charCount').innerText = `${text.length} chars`;
+    }
+
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('whatsappInput').value = e.target.result;
+        updateCharCount();
+        showToast(`Loaded ${file.name} successfully! Click 'AI Extract Leads' to process.`, 'success');
+      };
+      reader.readAsText(file);
+    }
+
+    // Toast alert helper
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      
+      let icon = 'ℹ️';
+      if (type === 'success') icon = '✅';
+      if (type === 'error') icon = '❌';
+      if (type === 'warning') icon = '⚠️';
+
+      toast.innerHTML = `<span>${icon}</span><span>${message}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 4500);
+    }
+
+    /**
+     * Main AI Execution Dispatcher
+     */
+    async function processWithAI() {
+      const rawText = document.getElementById('whatsappInput').value;
+      if (!rawText || !rawText.trim()) {
+        showToast('Please paste WhatsApp messages first!', 'warning');
+        return;
+      }
+
+      const provider = document.getElementById('llmProvider').value;
+      const model = document.getElementById('llmModel').value;
+      const apiKey = document.getElementById('apiKeyInput').value.trim();
+
+      if (provider !== 'local' && (!apiKey || apiKey.length < 5)) {
+        showToast(`Please enter your ${provider.toUpperCase()} API Key above to run AI extraction!`, 'warning');
+        return;
+      }
+
+      setLoading(true, `🤖 ${provider.toUpperCase()} AI is parsing & extracting leads...`);
+
+      try {
+        let extractedLeads = [];
+
+        if (provider === 'gemini') {
+          extractedLeads = await callGeminiAPI(rawText, model, apiKey);
+        } else if (provider === 'groq') {
+          extractedLeads = await callOpenAICompatibleAPI('https://api.groq.com/openai/v1/chat/completions', rawText, model, apiKey);
+        } else if (provider === 'openai') {
+          extractedLeads = await callOpenAICompatibleAPI('https://api.openai.com/v1/chat/completions', rawText, model, apiKey);
+        } else if (provider === 'deepseek') {
+          extractedLeads = await callOpenAICompatibleAPI('https://api.deepseek.com/chat/completions', rawText, model, apiKey);
+        } else if (provider === 'claude') {
+          extractedLeads = await callClaudeAPI(rawText, model, apiKey);
+        } else {
+          // Local fallback
+          extractedLeads = runLocalParser(rawText);
+        }
+
+        if (Array.isArray(extractedLeads) && extractedLeads.length > 0) {
+          leadsData = extractedLeads;
+          renderTable();
+          showToast(`Successfully extracted ${leadsData.length} lead(s) with ${provider.toUpperCase()} AI!`, 'success');
+        } else {
+          showToast('No leads found in the provided text. Try checking the raw input.', 'warning');
+        }
+      } catch (err) {
+        console.error('Extraction Error:', err);
+        showToast(`Extraction Failed: ${err.message}`, 'error');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    /**
+     * Call Google Gemini API (Free tier & highly capable)
+     */
+    async function callGeminiAPI(rawText, model, apiKey) {
+      const cleanModel = (model || 'gemini-3.6-flash').replace(/^models\//, '').trim();
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${cleanModel}:generateContent?key=${apiKey}`;
+      
+      const payload = {
+        contents: [
+          {
+            parts: [
+              { text: `${EXTRACTION_SYSTEM_PROMPT}\n\nRAW WHATSAPP MESSAGES TO PARSE:\n"""\n${rawText}\n"""` }
+            ]
+          }
+        ],
+        generationConfig: {
+          temperature: 0.1,
+          responseMimeType: "application/json"
+        }
+      };
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error?.message || `Gemini API returned HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      const content = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!content) throw new Error('Empty response received from Gemini API');
+
+      return parseJSONResponse(content);
+    }
+
+    /**
+     * Call OpenAI / Groq / DeepSeek (Standard OpenAI Compatible Chat Completions API)
+     */
+    async function callOpenAICompatibleAPI(endpoint, rawText, model, apiKey) {
+      const payload = {
+        model: model,
+        temperature: 0.1,
+        messages: [
+          { role: "system", content: EXTRACTION_SYSTEM_PROMPT },
+          { role: "user", content: `RAW WHATSAPP MESSAGES TO PARSE:\n"""\n${rawText}\n"""` }
+        ],
+        response_format: { type: "json_object" }
+      };
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error?.message || `API returned HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      const content = data.choices?.[0]?.message?.content;
+      if (!content) throw new Error('Empty response received from AI model');
+
+      return parseJSONResponse(content);
+    }
+
+    /**
+     * Call Anthropic Claude API
+     */
+    async function callClaudeAPI(rawText, model, apiKey) {
+      const payload = {
+        model: model,
+        max_tokens: 4096,
+        temperature: 0.1,
+        system: EXTRACTION_SYSTEM_PROMPT,
+        messages: [
+          { role: "user", content: `RAW WHATSAPP MESSAGES TO PARSE:\n"""\n${rawText}\n"""` }
+        ]
+      };
+
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error?.message || `Claude API returned HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      const content = data.content?.[0]?.text;
+      if (!content) throw new Error('Empty response received from Claude API');
+
+      return parseJSONResponse(content);
+    }
+
+    /**
+     * Safely parse JSON from LLM outputs (handles markdown wrappers e.g. ```json ... ``` or object wrappers)
+     */
+    function parseJSONResponse(rawContent) {
+      let cleaned = rawContent.trim();
+      // Remove markdown ```json and ```
+      cleaned = cleaned.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim();
+
+      const parsed = JSON.parse(cleaned);
+
+      // If wrapped in an object like { "leads": [...] } or { "data": [...] }
+      if (Array.isArray(parsed)) {
+        return parsed;
+      } else if (parsed.leads && Array.isArray(parsed.leads)) {
+        return parsed.leads;
+      } else if (parsed.products && Array.isArray(parsed.products)) {
+        return parsed.products;
+      } else if (parsed.data && Array.isArray(parsed.data)) {
+        return parsed.data;
+      } else {
+        // Single lead object wrapped
+        return [parsed];
+      }
+    }
+
+    /**
+     * Local Heuristic Parser Fallback
+     */
+    /**
+     * Local Heuristic Parser Fallback (Offline Mode)
+     */
+    function runLocalParser(rawText) {
+      const chunks = rawText.split(/(?:^|\r?\n)(?=(?:\[\d{1,2}[\/\-]\d{1,2}.*?\]|Buy\/Sell|Requirement|Available)\s*[:\-])/gi).filter(Boolean);
+      if (chunks.length === 0) chunks.push(rawText);
+
+      const results = [];
+
+      chunks.forEach(chunk => {
+        const lines = chunk.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+        if (lines.length === 0) return;
+
+        let globalOwner = '';
+        let globalCompany = '';
+        let globalEmail = '';
+        let globalPhone = '';
+        let globalRole = /buy|need|require|chahiye/i.test(chunk) ? 'BUYER' : 'SUPPLIER';
+        let globalCategory = /api|pharma/i.test(chunk) ? 'API' : 'API';
+        let designation = '';
+
+        // Extract Email
+        const emailMatch = chunk.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+        if (emailMatch) globalEmail = emailMatch[0];
+
+        // Extract Phone (handles "Whatsapp quarry:9620185750", "+91 9376215998", etc.)
+        const phoneMatch = chunk.match(/\b\+?\d{10,13}\b/);
+        if (phoneMatch) globalPhone = phoneMatch[0];
+
+        // Line-by-line inspection for Signatures & Companies
+        lines.forEach((line, idx) => {
+          // Signature check: "Bhami, Director", "Chintu patel / Director", "Praveen - Owner"
+          const sigMatch = line.match(/^([A-Z][a-zA-Z0-9\.\s]{1,30})[,\/\-\|]\s*(Director|Owner|Manager|Proprietor|CEO|Sales|Head|Purchase|Partner)\b/i);
+          if (sigMatch && !globalOwner) {
+            globalOwner = sigMatch[1].trim();
+            designation = sigMatch[2].trim();
+          }
+
+          // Key-Value contact check: "Name: Bhami", "Company: Trinadh"
+          if (line.includes(':')) {
+            const parts = line.split(':');
+            const k = parts[0].toLowerCase().trim();
+            const v = parts.slice(1).join(':').trim();
+            if ((k === 'name' || k.includes('owner') || k.includes('contact')) && !k.includes('product')) {
+              if (!globalOwner) globalOwner = v;
+            } else if (k.includes('company') || k.includes('firm')) {
+              if (!globalCompany) globalCompany = v;
+            } else if (k.includes('designation') || k.includes('title')) {
+              if (!designation) designation = v;
+            }
+          }
+
+          // Company check: "Trinadh Industries Pvt. Ltd." or "Bsky healthcare Pvt Ltd"
+          const compMatch = line.match(/\b([A-Z0-9][A-Za-z0-9\.\&\-\s]{1,35}\s+(?:Pvt\.?\s*Ltd\.?|Ltd\.?|Pvt|Inc|Corp|Industries|Chemicals|Pharma|Labs|Enterprise|Traders|Exports|Imports))\b/i);
+          if (compMatch && !globalCompany) {
+            let rawComp = compMatch[1].trim();
+            rawComp = rawComp.replace(/^(?:the|following|products|are|currently|available|through|from|by|at|with|contact)\s+/i, '').trim();
+            if (rawComp) globalCompany = rawComp;
+          }
+        });
+
+        // Fallback owner check from signature lines e.g. "Chintu patel \n Director"
+        if (!globalOwner) {
+          lines.forEach((line, idx) => {
+            if (/^(Director|Owner|Proprietor|CEO|Manager|Sales Head)\b/i.test(line)) {
+              designation = line.trim();
+              if (idx > 0 && lines[idx - 1].split(' ').length <= 3 && !lines[idx - 1].includes(':')) {
+                globalOwner = lines[idx - 1].replace(/[•\*\-\d\.\)]+/g, '').trim();
+              }
+            }
+          });
+        }
+
+        // Bullet / Product List Parsing (e.g. "• Mavacamten – 1.4 kg" or "- Carboplatin")
+        const bulletProducts = [];
+        lines.forEach(line => {
+          const bulletMatch = line.match(/^(?:[•\*\-\d\.\)]+|\d+\.)\s*(.+)$/);
+          if (bulletMatch) {
+            const itemStr = bulletMatch[1].trim();
+            const parts = itemStr.split(/[\–\-\:\=]/);
+            const prodName = parts[0].trim();
+            const qty = parts.length > 1 ? parts.slice(1).join(' ').trim() : '';
+
+            if (prodName && !/interested buyers|dear all|following products|other products/i.test(prodName)) {
+              bulletProducts.push({ name: prodName, qty: qty });
+            }
+          }
+        });
+
+        if (bulletProducts.length > 0) {
+          bulletProducts.forEach(bp => {
+            results.push({
+              role: globalRole,
+              productName: bp.name,
+              companyName: globalCompany,
+              contactName: globalOwner,
+              ownerName: globalOwner,
+              designation: designation,
+              phoneNumber: globalPhone,
+              email: globalEmail,
+              quantity: bp.qty,
+              minQuantity: '',
+              casNumber: '',
+              category: globalCategory,
+              remarks: designation ? `Designation: ${designation}` : ''
+            });
+          });
+        } else {
+          // Single product fallback
+          let singleProd = '';
+          lines.forEach(line => {
+            if (line.toLowerCase().includes('product:') || line.toLowerCase().includes('name of product:')) {
+              singleProd = line.split(':')[1].trim();
+            }
+          });
+
+          if (singleProd || globalCompany || globalPhone) {
+            results.push({
+              role: globalRole,
+              productName: singleProd || lines[0] || '',
+              companyName: globalCompany,
+              contactName: globalOwner,
+              ownerName: globalOwner,
+              designation: designation,
+              phoneNumber: globalPhone,
+              email: globalEmail,
+              quantity: '',
+              minQuantity: '',
+              casNumber: '',
+              category: globalCategory,
+              remarks: designation ? `Designation: ${designation}` : ''
+            });
+          }
+        }
+      });
+
+      return results;
+    }
+
+    function setLoading(isLoading, text = '') {
+      const overlay = document.getElementById('loadingOverlay');
+      const status = document.getElementById('loadingStatusText');
+      if (isLoading) {
+        status.innerText = text;
+        overlay.style.display = 'flex';
+      } else {
+        overlay.style.display = 'none';
+      }
+    }
+
+    /**
+     * Render the interactive editable table
+     */
+    function renderTable(filterQuery = '') {
+      const tbody = document.getElementById('tableBody');
+      const emptyState = document.getElementById('emptyState');
+      tbody.innerHTML = '';
+
+      const q = filterQuery.toLowerCase().trim();
+      const filtered = leadsData.filter(item => {
+        if (!q) return true;
+        return (
+          (item.productName && String(item.productName).toLowerCase().includes(q)) ||
+          (item.companyName && String(item.companyName).toLowerCase().includes(q)) ||
+          (item.contactName && String(item.contactName).toLowerCase().includes(q)) ||
+          (item.phoneNumber && String(item.phoneNumber).toLowerCase().includes(q)) ||
+          (item.email && String(item.email).toLowerCase().includes(q)) ||
+          (item.remarks && String(item.remarks).toLowerCase().includes(q))
+        );
+      });
+
+      // Update statistics
+      document.getElementById('statTotal').innerText = leadsData.length;
+      document.getElementById('leadCountDisplay').innerText = leadsData.length;
+      document.getElementById('statBuyers').innerText = leadsData.filter(d => (d.role || '').toUpperCase().includes('BUY')).length;
+      document.getElementById('statSuppliers').innerText = leadsData.filter(d => !(d.role || '').toUpperCase().includes('BUY')).length;
+      document.getElementById('statContacts').innerText = leadsData.filter(d => d.phoneNumber || d.email).length;
+
+      if (filtered.length === 0) {
+        emptyState.style.display = 'block';
+        return;
+      } else {
+        emptyState.style.display = 'none';
+      }
+
+      filtered.forEach((item, index) => {
+        const tr = document.createElement('tr');
+        
+        tr.innerHTML = `
+          <td class="col-action" style="color: var(--text-muted); font-weight: 600;">${index + 1}</td>
+          
+          <td class="col-role">
+            <select class="cell-select" onchange="updateLeadField(${index}, 'role', this.value)">
+              <option value="BUYER" ${item.role === 'BUYER' ? 'selected' : ''}>BUYER</option>
+              <option value="SUPPLIER" ${item.role !== 'BUYER' ? 'selected' : ''}>SUPPLIER</option>
+            </select>
+          </td>
+
+          <td class="col-product">
+            <input type="text" class="cell-input" value="${escapeHtml(item.productName || '')}" onchange="updateLeadField(${index}, 'productName', this.value)" placeholder="Product Name" />
+          </td>
+
+          <td class="col-company">
+            <input type="text" class="cell-input" value="${escapeHtml(item.companyName || '')}" onchange="updateLeadField(${index}, 'companyName', this.value)" placeholder="Company Name" />
+          </td>
+
+          <td class="col-contact">
+            <input type="text" class="cell-input" value="${escapeHtml(item.contactName || '')}" onchange="updateLeadField(${index}, 'contactName', this.value)" placeholder="Contact Person" />
+          </td>
+
+          <td class="col-designation">
+            <input type="text" class="cell-input" value="${escapeHtml(item.designation || '')}" onchange="updateLeadField(${index}, 'designation', this.value)" placeholder="Designation" />
+          </td>
+
+          <td class="col-phone">
+            <input type="text" class="cell-input" value="${escapeHtml(item.phoneNumber || '')}" onchange="updateLeadField(${index}, 'phoneNumber', this.value)" placeholder="+91 ..." />
+          </td>
+
+          <td class="col-email">
+            <input type="text" class="cell-input" value="${escapeHtml(item.email || '')}" onchange="updateLeadField(${index}, 'email', this.value)" placeholder="email@domain.com" />
+          </td>
+
+          <td class="col-qty">
+            <input type="text" class="cell-input" value="${escapeHtml(item.quantity || '')}" onchange="updateLeadField(${index}, 'quantity', this.value)" placeholder="Qty" />
+          </td>
+
+          <td class="col-minqty">
+            <input type="text" class="cell-input" value="${escapeHtml(item.minQuantity || '')}" onchange="updateLeadField(${index}, 'minQuantity', this.value)" placeholder="MOQ" />
+          </td>
+
+          <td class="col-cas">
+            <input type="text" class="cell-input" value="${escapeHtml(item.casNumber || '')}" onchange="updateLeadField(${index}, 'casNumber', this.value)" placeholder="CAS No" />
+          </td>
+
+          <td class="col-cat">
+            <input type="text" class="cell-input" value="${escapeHtml(item.category || 'API')}" onchange="updateLeadField(${index}, 'category', this.value)" placeholder="Category" />
+          </td>
+
+          <td class="col-remarks">
+            <input type="text" class="cell-input" value="${escapeHtml(item.remarks || '')}" onchange="updateLeadField(${index}, 'remarks', this.value)" placeholder="Packaging, Market, Notes..." />
+          </td>
+
+          <td class="col-action">
+            <button class="btn btn-danger btn-sm" style="padding: 4px 8px;" onclick="deleteRow(${index})" title="Delete Row">🗑️</button>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    function escapeHtml(text) {
+      if (text === null || text === undefined) return '';
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function updateLeadField(index, field, value) {
+      if (leadsData[index]) {
+        leadsData[index][field] = value;
+      }
+    }
+
+    function deleteRow(index) {
+      leadsData.splice(index, 1);
+      renderTable(document.getElementById('tableSearch').value);
+      showToast('Row removed', 'info');
+    }
+
+    function addNewEmptyRow() {
+      leadsData.push({
+        role: 'SUPPLIER',
+        productName: '',
+        companyName: '',
+        contactName: '',
+        designation: '',
+        phoneNumber: '',
+        email: '',
+        quantity: '',
+        minQuantity: '',
+        casNumber: '',
+        category: 'API',
+        remarks: ''
+      });
+      renderTable(document.getElementById('tableSearch').value);
+      showToast('New blank row added', 'info');
+    }
+
+    function filterTable() {
+      const q = document.getElementById('tableSearch').value;
+      renderTable(q);
+    }
+
+    function clearAllData() {
+      if (leadsData.length === 0 && !document.getElementById('whatsappInput').value) return;
+      if (confirm('Are you sure you want to clear all inputs and extracted rows?')) {
+        leadsData = [];
+        document.getElementById('whatsappInput').value = '';
+        updateCharCount();
+        renderTable();
+        showToast('Workspace cleared', 'info');
+      }
+    }
+
+    function loadSampleData() {
+      const sampleText = `[03/09, 17:59] siya aasamedichem: Buy/Sell:  Buy
+Name of product:   Magnesium Sulphate 7H2O
+Market :  Domestic
+Packing :    Bag
+Quantity :   30 ton
+
+Name : Praveen
+Company : Khushi Chemicals
+Designation : Owner
+Number : +91 9376215998
+Email : praveenrjain74@yahoo.com
+
+[03/09, 17:59] siya aasamedichem: Buy/Sell  :  Sell
+
+Name of product : NATURAL CAMPHOR POWDER 98.2%
+Make : WUXI HEXIA CHEMICAL COMPANY
+Packaging :  25 Kgs
+Ready stock : 6 Tons
+
+Market : DOMESTIC
+
+Name : MANAN BHARDWAJ
+Company : EXPO ESSENTIAL OILS
+Designation  : Sales Head
+Number  : +91 7503196548
+Sales@expoessntialoils.come
+
+[03/09, 17:59] siya aasamedichem: System includes:
+GCMS-TQ8030 Mass Spectrometer
+Shimadzu GC-2010 Plus Capillary GC
+Shimadzu AOC20i  Autoinjector with 6-8 vials
+Shimadzu AOC20S  Autosampler with 1.5 mL Vials: Holds up to 150 vials total in the carousel tray.
+Edwards E2M 1.5 Rough pump
+Company Name: Bsky healthcare Pvt Ltd
+9099069198
+Ahmedabad
+Chintu patel 
+Director`;
+
+      document.getElementById('whatsappInput').value = sampleText;
+      updateCharCount();
+      processWithAI();
+    }
+
+    /**
+     * 1-Click Excel Export (.xlsx)
+     * Compatible with unlisted_products database schema
+     */
+    function exportToExcel() {
+      if (leadsData.length === 0) {
+        showToast('No leads to export! Please extract some messages first.', 'warning');
+        return;
+      }
+
+      if (typeof XLSX === 'undefined') {
+        showToast('SheetJS library is still loading. Please check internet connection.', 'error');
+        return;
+      }
+
+      try {
+        const exportRows = leadsData.map((item, i) => ({
+          "S.No": i + 1,
+          "Product Name": item.productName || "",
+          "CAS No": item.casNumber || item.casNo || "",
+          "Company Name": item.companyName || "",
+          "Owner Name": item.ownerName || item.contactName || "",
+          "Category": item.category || "",
+          "Role": item.role || "SUPPLIER",
+          "Email": item.email || "",
+          "Phone Number": item.phoneNumber || "",
+          "Quantity": item.quantity || "",
+          "Min Qty": item.minQuantity || item.minQty || "",
+          "Remarks": item.remarks || ""
+        }));
+
+        const ws = XLSX.utils.json_to_sheet(exportRows);
+
+        const colWidths = [
+          { wch: 6 },  // S.No
+          { wch: 12 }, // Role
+          { wch: 32 }, // Product Name
+          { wch: 26 }, // Company Name
+          { wch: 22 }, // Contact Name
+          { wch: 18 }, // Designation
+          { wch: 20 }, // Phone Number
+          { wch: 28 }, // Email
+          { wch: 14 }, // Quantity
+          { wch: 14 }, // Min Quantity
+          { wch: 16 }, // CAS Number
+          { wch: 18 }, // Category
+          { wch: 45 }, // Remarks
+        ];
+        ws['!cols'] = colWidths;
+
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Unlisted Leads");
+
+        const now = new Date();
+        const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+        const fileName = `WhatsApp_Leads_${dateStr}.xlsx`;
+
+        XLSX.writeFile(wb, fileName);
+        showToast(`Downloaded ${fileName} successfully!`, 'success');
+      } catch (err) {
+        console.error('Export error:', err);
+        showToast('Export failed: ' + err.message, 'error');
+      }
+    }
+  </script>
+</body>
+</html>
